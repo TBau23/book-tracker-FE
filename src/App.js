@@ -1,15 +1,14 @@
 import './App.css';
 import React, { useState } from 'react';
 import Header from './Components/Header';
-import Login from './Components/Login';
 import { Switch, Route } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard';
 import LandingPage from './Pages/LandingPage';
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const {isAuthenticated, isLoading} = useAuth0();
 
   return (
     <div className="App">
@@ -17,11 +16,9 @@ function App() {
       <h2>Stack Tracker</h2>
 
       <Switch>
-        <Route path='/login'>
-          <Login />
-        </Route>
+        
         <Route path='/'>
-          {loggedIn ? <Dashboard /> : <LandingPage />}
+          {isAuthenticated ? <Dashboard /> : <LandingPage />}
         </Route>
         
       </Switch>
